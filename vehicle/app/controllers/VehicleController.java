@@ -1,6 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import config.Connection;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -11,33 +12,23 @@ import javax.inject.Inject;
 import java.io.IOException;
 
 public class VehicleController extends Controller {
-    private final VehicleService vehicleService;
+    @Inject private VehicleService vehicleService;
 
-    @Inject
-    public VehicleController(VehicleService vehicleService) {
-        this.vehicleService = vehicleService;
-    }
 
     public Result addDocument(Http.Request request) throws IOException {
-        JsonNode jsonNode = request.body().asJson();
-        String userId = jsonNode.get("user_id").asText();
-        String userName = jsonNode.get("user_name").asText();
-        String vehicleId = jsonNode.get("vehicle_id").asText();
-        String chassisNumber = jsonNode.get("chassis_number").asText();
-        String modelId = jsonNode.get("model_id").asText();
-        vehicleService.addDocument(userId, userName, vehicleId, chassisNumber, modelId);
+        vehicleService.addDocument(request);
         return ok("Data inserted");
     }
 
     public Result getByUserId(String userId) throws IOException {
-        JsonNode result = vehicleService.getByUserId(userId);
+        String result = vehicleService.getByUserId(userId);
         if (result == null) {
             return notFound("Document not found");
         }
         return ok(result);
     }
     public Result getByVehicleId(String vehicleId) throws IOException {
-        JsonNode result = vehicleService.getByUserId(vehicleId);
+        String result = vehicleService.getByUserId(vehicleId);
         if (result == null) {
             return notFound("Document not found");
         }

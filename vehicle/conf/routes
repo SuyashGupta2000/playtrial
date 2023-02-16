@@ -16,3 +16,5 @@ POST   /addDocument                 controllers.VehicleController.addDocument(re
 
 GET    /getByUserId/:userId        controllers.VehicleController.getByUserId(userId: String)
 GET    /getByVehicleId/:vehicleId     controllers.VehicleController.getByVehicleId(vehicleId: String)
+
+#POST  /addVehicle/:userId/:userName/:vehicleId/:chassisNumber/:modelId       controllers.MySQLController.addVehicle(userId:String,userName: String ,vehicleId:String , chassisNumber:String , modelId:String )
